@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID "TMPL6_Fwa4GoS"
-#define BLYNK_TEMPLATE_NAME "medicine alarm"
-#define BLYNK_AUTH_TOKEN "mTlU6xMVki1zz459t5aDDo2zyU6ZH33b"
+#define BLYNK_TEMPLATE_ID "TMPL6HeiJU5pj"
+#define BLYNK_TEMPLATE_NAME "MBA"
+#define BLYNK_AUTH_TOKEN "G38GTMYPgqw7F9DXyN1CpnEcxhJzdQIH"
 
 #include <Wire.h>
 #include <RTClib.h>
