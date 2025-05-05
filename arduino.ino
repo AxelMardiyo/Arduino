@@ -1,22 +1,22 @@
 #define BLYNK_TEMPLATE_ID "TMPL6_Fwa4GoS"
 #define BLYNK_TEMPLATE_NAME "medicine alarm"
-#define BLYNK_AUTH_TOKEN  "mTlU6xMVki1zz459t5aDDo2zyU6ZH33b"
+#define BLYNK_AUTH_TOKEN "mTlU6xMVki1zz459t5aDDo2zyU6ZH33b"
 
 #include <Wire.h>
 #include <RTClib.h>
 #include <SoftwareSerial.h>
-#include <ESP8266_Lib.h>
-#include <BlynkSimpleShieldEsp8266.h>
+#include <WiFi.h>             // Ganti dengan WiFi.h untuk ESP32 atau gunakan ESP8266WiFi.h untuk ESP8266
+#include <BlynkSimpleEsp32.h> // Ganti dengan BlynkSimpleEsp8266.h untuk ESP8266
 
 #define BUZZER_PIN 7
 
 char auth[] = BLYNK_AUTH_TOKEN;
-char ssid[] = "Abcd";
-char pass[] = "abcd1234";
+char ssid[] = "Abcd";    // Ganti dengan SSID WiFi kamu
+char pass[] = "abcd1234"; // Ganti dengan password WiFi kamu
 
 // SoftwareSerial untuk komunikasi ke ESP-01
 SoftwareSerial espSerial(2, 3); // RX, TX
-ESP8266 wifi(&espSerial);       // objek wifi dibikin dari espSerial
+WiFiClient client;  // Menggunakan WiFiClient untuk ESP32 atau ESP8266
 
 RTC_DS3231 rtc;
 BlynkTimer timer;
@@ -58,22 +58,24 @@ void checkTime() {
 
 void setup() {
   Serial.begin(9600);
-  espSerial.begin(9600); // komunikasi ke ESP-01
-
+  espSerial.begin(9600);  // komunikasi ke ESP-01
+  
   Wire.begin();
   rtc.begin();
 
   pinMode(BUZZER_PIN, OUTPUT);
   digitalWrite(BUZZER_PIN, LOW);
 
-  Blynk.begin(auth, wifi, ssid, pass);
+  // Menghubungkan ke Blynk IoT
+  Blynk.begin(auth, ssid, pass);
 
+  // Mengatur timer untuk memeriksa waktu setiap detik
   timer.setInterval(1000L, checkTime);
 
   Serial.println("Sistem siap.");
 }
 
 void loop() {
-  Blynk.run();   // ← harus pakai tanda kurung ()
-  timer.run();   // ← harus pakai tanda kurung juga
+  Blynk.run();  // ← pastikan pakai tanda kurung
+  timer.run();  // ← pastikan pakai tanda kurung juga
 }
